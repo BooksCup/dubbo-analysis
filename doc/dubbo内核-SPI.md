@@ -6,7 +6,7 @@
     - [2 JDK SPI扩展](#2-JDK-SPI扩展)  
             - [2.1 JDK SPI示例](#21-JDK-SPI示例)  
             - [2.2 JDK SPI原理](#22-JDK-SPI原理)  
-            - [2.3 JDK SPI ServiceLoader缺点](#22-JDK-SPI-ServiceLoader缺点)  
+            - [2.3 JDK SPI ServiceLoader缺点](#23-JDK-SPI-ServiceLoader缺点)  
 
 # dubbo内核-SPI
 ## 1 SPI
