@@ -80,7 +80,7 @@ public class SpiMain {
 ```
 
 /META-INF/services/com.bc.soa.spi.jdk.serviceloader.Command文件中配置:  
-```javascript
+```
 com.bc.soa.spi.jdk.serviceloader.impl.StartupCommand
 com.bc.soa.spi.jdk.serviceloader.impl.ShutdownCommand
 ```
@@ -93,3 +93,15 @@ shutdown...
 ```
 
 [示例代码](https://github.com/BooksCup/dubbo-analysis/tree/master/src/main/java/com/bc/soa/spi/jdk)  
+
+### 2.2 JDK SPI原理  
+配置文件为什么放在META-INF/services下面?  
+ServiceLoader类(ServiceLoader.java)定义如下:  
+```java
+private static final String PREFIX = "META-INF/services/";
+```
+
+### 2.3 JDK SPI ServiceLoader缺点  
+1.虽然ServiceLoader也算是使用的延迟加载，但是基本只能通过遍历全部获取，也就是接口的实现类全部加载并实例化一遍。  
+如果你并不想使用某些实现类，它也被加载并且实例化了，这就造成了浪费。  
+2.获取某个实现类的方式不够灵活，只能通过Iterator形式获取，不能根据某个参数来获取对应的实现类。  
