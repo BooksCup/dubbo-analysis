@@ -1,3 +1,13 @@
+- [dubbo内核-SPI](#dubbo内核-SPI)  
+    - [1 SPI](#1-SPI)  
+            - [1.1 简介](#11-简介)  
+            - [1.2 设计目标](#12-设计目标)  
+            - [1.3 约定](#13-约定)  
+    - [2 JDK SPI扩展](#2-JDK SPI扩展)  
+            - [2.1 JDK SPI示例](#21-JDKSPI示例)  
+            - [2.2 JDK SPI原理](#22-JDKSPI原理)  
+            - [2.3 JDK SPI ServiceLoader缺点](#22-JDKSPIServiceLoader缺点)  
+
 # dubbo内核-SPI
 ## 1 SPI
 ### 1.1 简介  
@@ -105,3 +115,4 @@ private static final String PREFIX = "META-INF/services/";
 1.虽然ServiceLoader也算是使用的延迟加载，但是基本只能通过遍历全部获取，也就是接口的实现类全部加载并实例化一遍。  
 如果你并不想使用某些实现类，它也被加载并且实例化了，这就造成了浪费。  
 2.获取某个实现类的方式不够灵活，只能通过Iterator形式获取，不能根据某个参数来获取对应的实现类。  
+
