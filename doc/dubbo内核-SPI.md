@@ -31,3 +31,65 @@ ServiceLoader中定义的SPI规范没有什么特别之处，只需要有一个�
 1. 文件内容是提供者Class的全限定名列表，显然提供者Class都应该实现服务接口；
 2. 文件必须使用UTF-8编码。
 ```
+
+### 2.1 JDK SPI示例
+SPI服务接口:  
+```java
+public interface Command {
+
+    /**
+     * 执行命令
+     */
+    void execute();
+}
+```
+
+实现类1:  
+```java
+public class StartupCommand implements Command {
+
+    @Override
+    public void execute() {
+        System.out.println("startup...");
+    }
+}
+```
+
+实现类2:  
+```java
+public class ShutdownCommand implements Command {
+    @Override
+    public void execute() {
+        System.out.println("shutdown...");
+    }
+}
+```
+
+入口类:  
+```java
+public class SpiMain {
+    public static void main(String[] args) {
+        ServiceLoader<Command> loader = ServiceLoader.load(Command.class);
+        System.out.println(loader);
+
+        for (Command command : loader) {
+            command.execute();
+        }
+    }
+}
+```
+
+/META-INF/services/com.bc.soa.spi.jdk.serviceloader.Command文件中配置:  
+```javascript
+com.bc.soa.spi.jdk.serviceloader.impl.StartupCommand
+com.bc.soa.spi.jdk.serviceloader.impl.ShutdownCommand
+```
+
+运行结果:  
+```
+java.util.ServiceLoader[com.bc.soa.spi.jdk.serviceloader.Command]
+startup...
+shutdown...
+```
+
+[示例代码](https://github.com/BooksCup/dubbo-analysis/tree/master/src/main/java/com/bc/soa/spi/jdk)  
