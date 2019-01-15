@@ -117,13 +117,13 @@ private static final String PREFIX = "META-INF/services/";
 2.获取某个实现类的方式不够灵活，只能通过Iterator形式获取，不能根据某个参数来获取对应的实现类。  
 
 ## 3 Dubbo SPI扩展
-Dubbo对JDK SPI进行了扩展，对服务提供者配置文件中的内容进行了改造，由原来的提供者的全限定名列表改为了KV形式的列表，
-这也导致了Dubbo中无法直接使用JDK中的ServiceLoader。  
+Dubbo对JDK SPI进行了扩展，对服务提供者配置文件中的内容进行了改造，***由原来的提供者的全限定名列表改为了KV形式的列表，
+这也导致了Dubbo中无法直接使用JDK中的ServiceLoader***。  
 所以，与之对应，在Dubbo中有ExtensionLoader(com.alibaba.dubbo.common.extension.ExtensionLoader<T>)。  
 ExtensionLoader是扩展点载入器，用于载入Dubbo中的各种可配置组件，比如:  
 动态代理方式(ProxyFactory)、负载均衡策略(LoadBalance)、RPC协议(Protocol)、
 拦截器(Filter)、容器类型(Container)、集群方式(Cluster)和注册中心类型(RegistryFactory)等。  
-总之，Dubbo为了应对各种场景，它的所有内部组件都是通过这种SPI的方式来管理的，
+总之，***Dubbo为了应对各种场景，它的所有内部组件都是通过这种SPI的方式来管理的***，
 这也就是为什么Dubbo需要将服务提供者配置文件设置成KV键值对形式，这个K就是我们在Dubbo配置文件或注解中用到的K，
 Dubbo直接通过服务接口(上面提到的ProxyFactory、LoadBalance、Protocol、Filter等)和配置的K从ExtensionLoader拿到服务提供的实现类。  
 同时，由于Dubbo使用了URL总线的设计，即很多参数通过URL对象来传递，在实际中，具体要用到哪个值，可以通过URL中的参数值来指定。  
