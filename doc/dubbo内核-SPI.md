@@ -21,3 +21,12 @@ SPI的具体约定如下:
 当服务提供者(provider)，提供了一个接口多种实现时，一般会在jar包的META-INF/services/目录下，创建该接口的同名文件。  
 该文件里面的内容就是该服务提供接口的具体实现类的名称。  
 而当外部加载这个模块的时候，就能通过jar包META-INF/services/里的配置文件得到具体的类名，并加载实例化，完成模块的装配。  
+
+## 2 JDK SPI扩展  
+JDK为SPI的实现提供工具类，即java.util.ServiceLoader。  
+ServiceLoader中定义的SPI规范没有什么特别之处，只需要有一个提供者配置文件(provider-configuration file)。  
+该文件需要在resource目录META-INF/services下，文件名就是服务接口的全限定名。
+```
+1. 文件内容是提供者Class的全限定名列表，显然提供者Class都应该实现服务接口；
+2. 文件必须使用UTF-8编码。
+```
