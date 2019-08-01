@@ -138,3 +138,13 @@ Dubbo对SPI的扩展是通过ExtensionLoader来实现的，查看ExtensionLoader
 都不是，而是注入一个动态生成的接口B的实现者B$Adpative，  
 该实现类能根据参数的不同，自动引用B1或者B2来完成相应的功能。  
 ```
+3.采用装饰器模式进行功能增强，自动包装实现，这种实现的类一般是自动激活的，常用于包装类，
+比如:Protocol的两个实现类:ProtocolFilterWrapper、ProtocolListenerWrapper。  
+还是2里面的例子，接口A的另一个实现类AWrapper1。大体内容如下:  
+```java
+private A a;
+AWrapper1 (A a) {
+    this.a = a;
+}
+```
+因此，当在获取某一个接口A的实现者A1的时候，已经自动被AWrapper1包装了。  
