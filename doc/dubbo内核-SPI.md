@@ -127,3 +127,14 @@ ExtensionLoader是扩展点载入器，用于载入Dubbo中的各种可配置组
 这也就是为什么Dubbo需要将服务提供者配置文件设置成KV键值对形式，这个K就是我们在Dubbo配置文件或注解中用到的K，
 Dubbo直接通过服务接口(上面提到的ProxyFactory、LoadBalance、Protocol、Filter等)和配置的K从ExtensionLoader拿到服务提供的实现类。  
 同时，由于Dubbo使用了URL总线的设计，即很多参数通过URL对象来传递，在实际中，具体要用到哪个值，可以通过URL中的参数值来指定。  
+
+### 3.1 扩展功能介绍
+Dubbo对SPI的扩展是通过ExtensionLoader来实现的，查看ExtensionLoader的源码，可以看到Dubbo对JDK SPI做了三个方面的扩展:  
+1.方便获取扩展实现:JDK SPI仅仅通过接口类名获取所有实现，而ExtensionLoader则通过接口类名和key值获取一个实现;  
+2.IOC依赖注入功能:Adaptive实现，就是生成一个代理类，这样就可以根据实际调用时的一些参数动态决定要调用的类了;  
+```
+举例来说:接口A，实现类A1、A2。接口B，实现类B1、B2。  
+现在实现类A1含有setB()方法，会自动注入一个接口B的实现者，此时注入B1还是B2呢？  
+都不是，而是注入一个动态生成的接口B的实现者B$Adpative，  
+该实现类能根据参数的不同，自动引用B1或者B2来完成相应的功能。  
+```
